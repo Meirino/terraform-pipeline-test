@@ -4,6 +4,28 @@ provider "aws" {
   region     = "${var.region}"
 }
 
+data "aws_ami" "AMI" {
+  executable_users = ["self"]
+  most_recent      = true
+  owners           = ["self"]
+
+  filter {
+    name = "name"
+    values = ["packer-example-*"]
+  }
+
+  filter {
+    name = "root-device-type"
+    values = ["ebs"]
+  }
+
+  filter {
+    name = "virtualization-type"
+    values = ["hvm"]
+  }
+}
+
+
 resource "aws_vpc" "default" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "dedicated"
@@ -32,6 +54,17 @@ resource "aws_subnet" "private-subnet" {
 
   tags {
     Name = "Private Subnet"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_instance" "web" {
+  ami           = "${data.aws_ami.AMI.id}"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.public-subnet.id}"
+
+  tags = {
+    Name = "Custom AMI EC2"
     Project = "Jenkins"
   }
 }
