@@ -5,24 +5,8 @@ provider "aws" {
 }
 
 data "aws_ami" "AMI" {
-  executable_users = ["self"]
   most_recent      = true
   owners           = ["self"]
-
-  filter {
-    name = "name"
-    values = ["packer-example-*"]
-  }
-
-  filter {
-    name = "root-device-type"
-    values = ["ebs"]
-  }
-
-  filter {
-    name = "virtualization-type"
-    values = ["hvm"]
-  }
 }
 
 
