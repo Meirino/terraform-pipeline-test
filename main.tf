@@ -9,14 +9,55 @@ resource "aws_vpc" "main" {
   instance_tenancy = "dedicated"
 
   tags = {
-    Name = "Jenkins_Example"
+    Name = "Example"
+    Project = "Jenkins"
   }
 }
 
+resource "aws_s3_bucket" "terraform-state-storage-s3" {
+    bucket = "terraform-state-management-bucket-s3"
+ 
+    versioning {
+      enabled = true
+    }
+ 
+    lifecycle {
+      prevent_destroy = true
+    }
+ 
+    tags {
+      Name = "S3 Remote Terraform State Store"
+      Project = "Jenkins"
+    }      
+}
+
+resource "aws_s3_bucket_policy" "b" {
+  bucket = "${aws_s3_bucket.terraform-state-storage-s3.id}"
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::mybucket"
+    },
+    {
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject"],
+      "Resource": "arn:aws:s3:::mybucket/path/to/my/key"
+    }
+  ]
+}
+POLICY
+}
+
 # terraform {
-#   backend "s3" {
-#     bucket = "mybucket"
-#     key    = "path/to/my/key"
-#     region = "us-east-1"
-#   }
+#  backend "s3" {
+#  encrypt = true
+#  bucket = "terraform-remote-state-storage-s3"
+#  region = "${var.region}"
+#  key = ""
+#  }
 # }
