@@ -40,11 +40,13 @@ resource "aws_s3_bucket_policy" "b" {
   "Statement": [
     {
       "Effect": "Allow",
+      "Principal": "*",
       "Action": "s3:ListBucket",
       "Resource": "arn:aws:s3:::mybucket"
     },
     {
       "Effect": "Allow",
+      "Principal": "*",
       "Action": ["s3:GetObject", "s3:PutObject"],
       "Resource": "arn:aws:s3:::mybucket/path/to/my/key"
     }
