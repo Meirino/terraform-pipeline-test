@@ -37,7 +37,7 @@ resource "aws_s3_bucket_policy" "tf-bucket-policy" {
   policy = <<POLICY
 {
   "Version": "2012-10-17",
-  "Id": "MY_POLICY"
+  "Id": "MY_POLICY",
   "Statement": [
     {
       "Sid": "Stmt1556886425926",
@@ -47,7 +47,7 @@ resource "aws_s3_bucket_policy" "tf-bucket-policy" {
         "s3:PutObject"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::terraform-state-management-bucket-s3",
+      "Resource": "arn:aws:s3:::terraform-state-management-bucket-s3/*",
       "Principal": "*"
     }
   ]
