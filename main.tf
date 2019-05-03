@@ -7,6 +7,7 @@ provider "aws" {
 data "aws_ami" "AMI" {
   most_recent      = true
   owners           = ["self"]
+  name_regex       = "packer-example-\\d{10}"
 }
 
 
@@ -31,17 +32,6 @@ resource "aws_subnet" "public-subnet" {
   }
 }
 
-resource "aws_subnet" "private-subnet" {
-  vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "10.0.2.0/24"
-  availability_zone = "${var.region}b"
-
-  tags {
-    Name = "Private Subnet"
-    Project = "Jenkins"
-  }
-}
-
 resource "aws_instance" "web" {
   ami           = "${data.aws_ami.AMI.id}"
   instance_type = "t2.micro"
@@ -51,21 +41,4 @@ resource "aws_instance" "web" {
     Name = "Custom AMI EC2"
     Project = "Jenkins"
   }
-}
-
-resource "aws_s3_bucket" "terraform-state-storage-s3" {
-    bucket = "terraform-state-management-bucket-s3"
- 
-    versioning {
-      enabled = true
-    }
- 
-    lifecycle {
-      prevent_destroy = true
-    }
- 
-    tags {
-      Name = "S3 Remote Terraform State Store"
-      Project = "Jenkins"
-    }      
 }

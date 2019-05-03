@@ -20,7 +20,18 @@
       },
       "instance_type": "t2.micro",
       "ssh_username": "ubuntu",
-      "ami_name": "packer-example-{{timestamp}}"
+      "ami_name": "packer-example-{{timestamp}}",
+      "run_tags": {
+        "OS_Version": "Ubuntu",
+        "Release": "Latest",
+        "Runner": "Packer"
+      },
+      "tags": {
+        "Name": "packer-example-{{timestamp}}",
+        "OS_Version": "Ubuntu",
+        "Release": "Latest",
+        "Runner": "EC2"
+      }
     }],
     "provisioners": []
   }
