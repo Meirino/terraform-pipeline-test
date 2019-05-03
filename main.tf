@@ -4,12 +4,34 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-resource "aws_vpc" "main" {
+resource "aws_vpc" "default" {
   cidr_block       = "10.0.0.0/16"
   instance_tenancy = "dedicated"
 
   tags = {
     Name = "Example"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_subnet" "public-subnet" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "10.0.1.0/24"
+  availability_zone = "${var.region}a"
+
+  tags {
+    Name = "Public Subnet"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_subnet" "private-subnet" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "10.0.2.0/24"
+  availability_zone = "${var.region}b"
+
+  tags {
+    Name = "Private Subnet"
     Project = "Jenkins"
   }
 }
