@@ -30,36 +30,3 @@ resource "aws_s3_bucket" "terraform-state-storage-s3" {
       Project = "Jenkins"
     }      
 }
-
-resource "aws_s3_bucket_policy" "tf-bucket-policy" {
-  bucket = "${aws_s3_bucket.terraform-state-storage-s3.id}"
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Id": "MY_POLICY",
-  "Statement": [
-    {
-      "Sid": "Stmt1556886425926",
-      "Action": [
-        "s3:GetObject",
-        "s3:ListBucket",
-        "s3:PutObject"
-      ],
-      "Effect": "Allow",
-      "Resource": "arn:aws:s3:::terraform-state-management-bucket-s3/*",
-      "Principal": "*"
-    }
-  ]
-}
-POLICY
-}
-
-# terraform {
-#  backend "s3" {
-#  encrypt = true
-#  bucket = "terraform-remote-state-storage-s3"
-#  region = "${var.region}"
-#  key = ""
-#  }
-# }
