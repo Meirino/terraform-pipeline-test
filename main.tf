@@ -31,7 +31,7 @@ resource "aws_s3_bucket" "terraform-state-storage-s3" {
     }      
 }
 
-resource "aws_s3_bucket_policy" "b" {
+resource "aws_s3_bucket_policy" "tf-bucket-policy" {
   bucket = "${aws_s3_bucket.terraform-state-storage-s3.id}"
 
   policy = <<POLICY
@@ -39,16 +39,15 @@ resource "aws_s3_bucket_policy" "b" {
   "Version": "2012-10-17",
   "Statement": [
     {
+      "Sid": "Stmt1556886425926",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:PutObject"
+      ],
       "Effect": "Allow",
-      "Principal": "*",
-      "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::mybucket"
-    },
-    {
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": ["s3:GetObject", "s3:PutObject"],
-      "Resource": "arn:aws:s3:::mybucket/path/to/my/key"
+      "Resource": "arn:aws:s3:::terraform-state-management-bucket-s3",
+      "Principal": "*"
     }
   ]
 }
