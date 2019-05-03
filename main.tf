@@ -7,7 +7,7 @@ provider "aws" {
 data "aws_ami" "AMI" {
   most_recent      = true
   owners           = ["self"]
-  name_regex       = "packer-example-\\d{10}"
+  name_regex       = "^packer-example-\\d{10}"
 }
 
 
