@@ -47,7 +47,7 @@ resource "aws_s3_bucket_policy" "tf-bucket-policy" {
         "s3:PutObject"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::terraform-state-management-bucket-s3/*",
+      "Resource": "arn:aws:s3:::terraform-state-management-bucket-s3",
       "Principal": "*"
     }
   ]
