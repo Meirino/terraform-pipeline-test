@@ -4,12 +4,17 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-data "aws_ami" "AMI" {
+data "aws_ami" "AMI_1" {
   most_recent      = true
   owners           = ["self"]
-  name_regex       = "^packer-example-\\d{10}"
+  name_regex       = "^packer-example-1-\\d{10}"
 }
 
+data "aws_ami" "AMI_2" {
+  most_recent      = true
+  owners           = ["self"]
+  name_regex       = "^packer-example-2-\\d{10}"
+}
 
 resource "aws_vpc" "default" {
   cidr_block       = "10.0.0.0/16"
@@ -33,12 +38,23 @@ resource "aws_subnet" "public-subnet" {
 }
 
 resource "aws_instance" "web" {
-  ami           = "${data.aws_ami.AMI.id}"
+  ami           = "${data.aws_ami.AMI_1.id}"
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.public-subnet.id}"
 
   tags = {
-    Name = "Custom AMI EC2"
+    Name = "Custom AMI_1 EC2"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_instance" "web" {
+  ami           = "${data.aws_ami.AMI_2.id}"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.public-subnet.id}"
+
+  tags = {
+    Name = "Custom AMI_2 EC2"
     Project = "Jenkins"
   }
 }
