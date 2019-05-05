@@ -2,8 +2,8 @@ import groovy.json.JsonOutput
 env.git_url = 'https://github.com/Meirino/terraform-pipeline-test.git'
 env.git_branch = 'master'
 env.jenkins_custom_workspace = "/opt/jenkins/terraform_test"
-env.access_key = "AKIASXDZOMGMKTVSINPF"
-env.secret_key = "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"
+env.access_key = "AKIASXDZOMGME6JEZRV3"
+env.secret_key = "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"
 env.region = "us-east-1"
 
 pipeline  {
