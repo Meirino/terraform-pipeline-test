@@ -42,3 +42,9 @@ resource "aws_instance" "web" {
     Project = "Jenkins"
   }
 }
+
+terraform {
+  backend "local" {
+    path = "./terraform.tfstate"
+  }
+}
