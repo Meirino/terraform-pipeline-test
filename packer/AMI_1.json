@@ -34,7 +34,7 @@
       "region": "{{user `region`}}",
       "source_ami": "ami-011b3ccf1bd6db744",
       "instance_type": "t2.micro",
-      "ssh_username": "ec2_user",
+      "ssh_username": "ec2-user",
       "ami_name": "packer-example-2-{{timestamp}}",
       "run_tags": {
         "OS_Version": "Redhat 7.6",
