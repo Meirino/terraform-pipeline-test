@@ -18,10 +18,9 @@ data "aws_ami" "AMI_2" {
 
 resource "aws_vpc" "default" {
   cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "dedicated"
 
   tags = {
-    Name = "Example"
+    Name = "Example VPC"
     Project = "Jenkins"
   }
 }
