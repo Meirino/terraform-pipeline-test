@@ -31,7 +31,7 @@ resource "aws_subnet" "public-subnet" {
   availability_zone = "${var.region}a"
 
   tags {
-    Name = "Public Subnet"
+    Name = "Public Subnet 1"
     Project = "Jenkins"
   }
 }
@@ -51,6 +51,28 @@ resource "aws_instance" "web2" {
   ami           = "${data.aws_ami.AMI_2.id}"
   instance_type = "t2.micro"
   subnet_id = "${aws_subnet.public-subnet.id}"
+
+  tags = {
+    Name = "Custom AMI_2 EC2"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_subnet" "public-subnet-2" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "10.0.1.0/24"
+  availability_zone = "${var.region}a"
+
+  tags {
+    Name = "Public Subnet"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_instance" "web3" {
+  ami           = "${data.aws_ami.AMI_2.id}"
+  instance_type = "t2.micro"
+  subnet_id = "${aws_subnet.public-subnet-2.id}"
 
   tags = {
     Name = "Custom AMI_2 EC2"
