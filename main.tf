@@ -10,11 +10,11 @@ data "aws_ami" "AMI_1" {
   name_regex       = "^packer-example-1-\\d{10}"
 }
 
-data "aws_ami" "AMI_2" {
-  most_recent      = true
-  owners           = ["self"]
-  name_regex       = "^packer-example-2-\\d{10}"
-}
+# data "aws_ami" "AMI_2" {
+#   most_recent      = true
+#   owners           = ["self"]
+#   name_regex       = "^packer-example-2-\\d{10}"
+# }
 
 resource "aws_vpc" "default" {
   cidr_block       = "10.0.0.0/16"
