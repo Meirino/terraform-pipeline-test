@@ -31,7 +31,7 @@
     "inline": ["sudo apt-get update", "sudo apt-get -y install docker.io"]
   }, {
     "type": "shell",
-    "inline": ["sudo systemctl start docker", "sudo systemctl enable docker", "sudo docker --version"]
+    "inline": ["sudo systemctl start docker", "sudo systemctl enable docker", "sudo docker --version", "sudo usermod -aG docker ubuntu"]
   }, {
     "type": "shell",
     "inline": ["sudo mkdir /tmp/app"]
