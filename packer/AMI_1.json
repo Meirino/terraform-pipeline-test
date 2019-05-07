@@ -1,52 +1,30 @@
 {
-    "variables": {
-      "aws_access_key": "",
-      "aws_secret_key": "",
-      "region": ""
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "region": ""
+  },
+  "builders": [{
+    "name": "Ubuntu Build",
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "{{user `region`}}",
+    "source_ami": "ami-0a313d6098716f372",
+    "instance_type": "t2.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "packer-example-1-{{timestamp}}",
+    "run_tags": {
+      "OS_Version": "Ubuntu",
+      "Release": "Latest",
+      "Runner": "Packer"
     },
-    "builders": [{
-      "name": "Ubuntu Build",
-      "type": "amazon-ebs",
-      "access_key": "{{user `aws_access_key`}}",
-      "secret_key": "{{user `aws_secret_key`}}",
-      "region": "{{user `region`}}",
-      "source_ami": "ami-0a313d6098716f372",
-      "instance_type": "t2.micro",
-      "ssh_username": "ubuntu",
-      "ami_name": "packer-example-1-{{timestamp}}",
-      "run_tags": {
-        "OS_Version": "Ubuntu",
-        "Release": "Latest",
-        "Runner": "Packer"
-      },
-      "tags": {
-        "Name": "packer-example-{{timestamp}}",
-        "OS_Version": "Ubuntu",
-        "Release": "Latest",
-        "Runner": "EC2"
-      }
-    },
-    {
-      "name": "Redhat Build",
-      "type": "amazon-ebs",
-      "access_key": "{{user `aws_access_key`}}",
-      "secret_key": "{{user `aws_secret_key`}}",
-      "region": "{{user `region`}}",
-      "source_ami": "ami-011b3ccf1bd6db744",
-      "instance_type": "t2.micro",
-      "ssh_username": "ec2-user",
-      "ami_name": "packer-example-2-{{timestamp}}",
-      "run_tags": {
-        "OS_Version": "Redhat 7.6",
-        "Release": "Latest",
-        "Runner": "Packer"
-      },
-      "tags": {
-        "Name": "packer-example-{{timestamp}}",
-        "OS_Version": "Redhat 7.6",
-        "Release": "Latest",
-        "Runner": "EC2"
-      }
-    }],
-    "provisioners": []
-  }
+    "tags": {
+      "Name": "packer-example-1-{{timestamp}}",
+      "OS_Version": "Ubuntu",
+      "Release": "Latest",
+      "Runner": "EC2"
+    }
+  }],
+  "provisioners": []
+}
