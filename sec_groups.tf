@@ -1,7 +1,7 @@
 resource "aws_security_group" "app_sec_group" {
   name          = "app_security_group"
   description   = "Allow app traffic"
-  vpc_id        = "${aws_vpc.default}"
+  vpc_id        = "${aws_vpc.default.id}"
 
   ingress {
     from_port   = 22
