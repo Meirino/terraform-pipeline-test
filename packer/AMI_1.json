@@ -38,6 +38,6 @@
     "destination": "/tmp/app"
   }, {
     "type": "shell",
-    "inline": ["cd /tmp/app && sudo docker build -t Meirino/node-app .", "sudo docker run -p 8080:3000 -d Meirino/node-app"]
+    "inline": ["sudo docker build -t meirino/node-app /tmp/app", "sudo docker run -p 8080:3000 -d Meirino/node-app"]
   }]
 }
