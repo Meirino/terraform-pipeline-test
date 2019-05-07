@@ -13,18 +13,31 @@
     "source_ami": "ami-0a313d6098716f372",
     "instance_type": "t2.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "packer-example-1-{{timestamp}}",
+    "ami_name": "app-docker-{{timestamp}}",
     "run_tags": {
       "OS_Version": "Ubuntu",
       "Release": "Latest",
       "Runner": "Packer"
     },
     "tags": {
-      "Name": "packer-example-1-{{timestamp}}",
+      "Name": "app-docker-{{timestamp}}",
       "OS_Version": "Ubuntu",
       "Release": "Latest",
       "Runner": "EC2"
     }
   }],
-  "provisioners": []
+  "provisioners": [{
+    "type": "shell",
+    "inline": ["sudo apt-get update", "sudo apt-get install docker", "sudo apt install docker.io"]
+  }, {
+    "type": "shell",
+    "inline": ["sudo systemctl start docker", "sudo systemctl enable docker", "sudo docker --version"]
+  }, {
+    "type": "file",
+    "source": "../app/",
+    "destination": "/tmp/app"
+  }, {
+    "type": "shell",
+    "inline": ["cd /tmp/app && sudo docker build -t Meirino/node-app .", "sudo docker run -p 8080:3000 -d Meirino/node-app"]
+  }]
 }

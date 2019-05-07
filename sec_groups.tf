@@ -1,7 +1,7 @@
 resource "aws_security_group" "app_sec_group" {
-  name        = "app_security_group"
-  description = "Allow app traffic"
-  vpc_id = "${aws_vpc.default}"
+  name          = "app_security_group"
+  description   = "Allow app traffic"
+  vpc_id        = "${aws_vpc.default}"
 
   ingress {
     from_port   = 22
@@ -33,10 +33,10 @@ resource "aws_security_group" "app_sec_group" {
 }
 
 resource "aws_instance" "web" {
-  ami           = "${data.aws_ami.AMI_1.id}"
-  instance_type = "t2.micro"
-  subnet_id = "${aws_subnet.public-subnet.id}"
-  security_groups = ["${aws_security_group.app_sec_group.id}"]
+  ami               = "${data.aws_ami.AMI_1.id}"
+  instance_type     = "t2.micro"
+  subnet_id         = "${aws_subnet.public-subnet.id}"
+  security_groups   = ["${aws_security_group.app_sec_group.id}"]
 
   tags = {
     Name = "App"
