@@ -15,6 +15,7 @@
     "ssh_username": "ubuntu",
     "ami_name": "app-docker-{{timestamp}}",
     "run_tags": {
+      "Name": "packer-installation",
       "OS_Version": "Ubuntu",
       "Release": "Latest",
       "Runner": "Packer"
