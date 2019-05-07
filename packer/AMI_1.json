@@ -35,11 +35,11 @@
     "inline": ["sudo apt-get install -y build-essential"]
   }, {
     "type": "shell",
-    "inline": ["sudo mkdir /tmp/app"]
+    "inline": ["sudo mkdir /home/ubuntu/app"]
   }, {
     "type": "file",
     "source": "{{pwd}}/app/",
-    "destination": "/tmp/app"
+    "destination": "/home/ubuntu/app"
   }, {
     "type": "shell",
     "inline": ["cd /tmp/app/", "sudo npm install", "npm start"]

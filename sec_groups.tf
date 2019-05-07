@@ -7,7 +7,7 @@ resource "aws_security_group" "app_sec_group" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = "170.252.72.1/32"
+    cidr_blocks = ["170.252.72.1/32"]
     description = "Accenture SSH"
   }
 
@@ -15,7 +15,7 @@ resource "aws_security_group" "app_sec_group" {
     from_port   = 3000
     to_port     = 3000
     protocol    = "tcp"
-    cidr_blocks = "170.252.72.1/32"
+    cidr_blocks = ["170.252.72.1/32"]
     description = "Accenture Node Port"
   }
 
@@ -23,7 +23,7 @@ resource "aws_security_group" "app_sec_group" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = "170.252.72.1/32"
+    cidr_blocks = ["170.252.72.1/32"]
     description = "Accenture HTTP"
   }
 
