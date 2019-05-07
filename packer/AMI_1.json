@@ -28,10 +28,7 @@
   }],
   "provisioners": [{
     "type": "shell",
-    "inline": ["sudo apt-get update", "sudo apt-get -y install docker.io"]
-  }, {
-    "type": "shell",
-    "inline": ["sudo systemctl start docker", "sudo systemctl enable docker", "sudo docker --version", "sudo usermod -aG docker ubuntu"]
+    "inline": ["sudo apt-get update", "sudo apt-get -y install nodejs npm"]
   }, {
     "type": "shell",
     "inline": ["sudo mkdir /tmp/app"]
@@ -41,6 +38,6 @@
     "destination": "/tmp/app"
   }, {
     "type": "shell",
-    "inline": ["sudo docker build -t meirino/node-app /tmp/app", "sudo docker run -p 8080:3000 -d meirino/node-app"]
+    "inline": ["cd /tmp/app/", "sudo npm install", "npm start"]
   }]
 }
