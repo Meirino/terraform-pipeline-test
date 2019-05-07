@@ -11,7 +11,7 @@
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "{{user `region`}}",
     "source_ami": "ami-0a313d6098716f372",
-    "instance_type": "t2.micro",
+    "instance_type": "t2.small",
     "ssh_username": "ubuntu",
     "ami_name": "app-docker-{{timestamp}}",
     "run_tags": {
@@ -28,7 +28,10 @@
   }],
   "provisioners": [{
     "type": "shell",
-    "inline": ["sudo apt-get update", "sudo apt-get -y install nodejs npm"]
+    "inline": ["sudo apt-get update", "curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -", "sudo apt-get install -y nodejs"]
+  }, {
+    "type": "shell",
+    "inline": ["sudo apt-get install -y build-essential"]
   }, {
     "type": "shell",
     "inline": ["sudo mkdir /tmp/app"]
