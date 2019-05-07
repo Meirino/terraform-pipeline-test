@@ -42,6 +42,6 @@
     "destination": "/tmp/app"
   }, {
     "type": "shell",
-    "inline": ["cd /tmp/app/", "sudo npm install", "npm start"]
+    "inline": ["cd /tmp/app/", "sudo npm install"]
   }]
 }
