@@ -34,7 +34,7 @@
     "inline": ["sudo systemctl start docker", "sudo systemctl enable docker", "sudo docker --version"]
   }, {
     "type": "file",
-    "source": "{{pwd}}/../app/",
+    "source": "{{pwd}}/app/",
     "destination": "/tmp/app"
   }, {
     "type": "shell",
