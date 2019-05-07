@@ -42,10 +42,4 @@ resource "aws_instance" "web" {
     Name = "App"
     Project = "Jenkins"
   }
-
-    # Inicializar Node
-    
-  provisioner "local-exec" {
-    command = "cd /tmp/app && npm start"
-  }
 }
