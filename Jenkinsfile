@@ -53,6 +53,7 @@ pipeline  {
             steps {
                 sh "terraform apply plan.out"
                 sh "terraform output -json > output.json"
+                sh "cat output.json"
             }
         }
     }
