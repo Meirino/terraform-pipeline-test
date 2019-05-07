@@ -5,12 +5,10 @@ env.git_url = 'https://github.com/Meirino/terraform-pipeline-test.git'
 env.git_branch = 'master'
 
 // Jenkins settings
-env.jenkins_custom_workspace = "/opt/jenkins/terraform_test"
+env.jenkins_custom_workspace = "/opt/pipelines/terraform_example"
 
-// AWS Credentials
-env.access_key = ""
-env.secret_key = ""
-env.region = ""
+// AWS Region
+env.region = "us-east-1"
 
 pipeline  {
     agent {
@@ -23,41 +21,32 @@ pipeline  {
     stages {
         stage('fech code') {
             steps {
-                git credentialsId: '', url: "$git_url"
-            }
-        }
-        stage('Parallel build example') {
-            parallel {
-                stage('Stage_1') {
-                    steps {
-                        sh "echo 'Stage 1'"
-                    }
-                }
-                stage('Stage_2') {
-                    steps {
-                        sh "echo 'Stage 2'"
-                    }
-                }
+                git credentialsId: 'Test_Github_Example', url: "$git_url"
             }
         }
         stage('build packer AMIs') {
             steps {
-                sh "packer build -var aws_access_key=$access_key -var aws_secret_key=$secret_key -var region=$region packer/AMI_1.json"
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '439cfd2f-c83d-439d-9c8f-48e014ec58d2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh "packer build -var aws_access_key=$AWS_ACCESS_KEY_ID -var aws_secret_key=$AWS_SECRET_ACCESS_KEY -var region=$region packer/AMI_1.json"
+                }
             }
         }
         stage('terraform init') {
             steps {
                 sh "terraform init"
+                sh "terraform get"
             }
         }
         stage('terraform plan') {
             steps {
-                sh "terraform plan -var='aws_access_key=$access_key' -var='aws_secret_key=$secret_key' -var='region=$region' -out=plan.out"
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '439cfd2f-c83d-439d-9c8f-48e014ec58d2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    sh "terraform plan -var='aws_access_key=$AWS_ACCESS_KEY_ID' -var='aws_secret_key=$AWS_SECRET_ACCESS_KEY' -var='region=$region' -out=plan.out"
+                }
             }
         }
         stage('approve deployment') {
             steps {
-                input "¿Aprovar despliegue?"
+                input "¿Aprobar despliegue?"
             }
         }
         stage('aplicar cambios') {
@@ -70,12 +59,16 @@ pipeline  {
     
     post {
         failure {
-            echo "Fallo, eliminando infraestructura"
-            sh "terraform destroy -var='aws_access_key=$access_key' -var='aws_secret_key=$secret_key' -var='region=$region' -auto-approve"
+            withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '439cfd2f-c83d-439d-9c8f-48e014ec58d2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                echo "Fallo, eliminando infraestructura"
+                sh "terraform destroy -var='aws_access_key=$AWS_ACCESS_KEY_ID' -var='aws_secret_key=$AWS_SECRET_ACCESS_KEY' -var='region=$region' -auto-approve"
+            }
         }
         success {
-            echo "Fallo, eliminando infraestructura"
-            sh "terraform destroy -var='aws_access_key=$access_key' -var='aws_secret_key=$secret_key' -var='region=$region' -auto-approve"
+            withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '439cfd2f-c83d-439d-9c8f-48e014ec58d2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                echo "Funcionamiento correcto, eliminando infraestructura"
+                sh "terraform destroy -var='aws_access_key=$AWS_ACCESS_KEY_ID' -var='aws_secret_key=$AWS_SECRET_ACCESS_KEY' -var='region=$region' -auto-approve"
+            }
         }
     }
 }
