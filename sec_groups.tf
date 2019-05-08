@@ -37,6 +37,7 @@ resource "aws_instance" "web" {
   instance_type     = "t2.micro"
   subnet_id         = "${aws_subnet.public-subnet.id}"
   security_groups   = ["${aws_security_group.app_sec_group.id}"]
+  key_name          = "proxy-test"
 
   tags = {
     Name = "App"
