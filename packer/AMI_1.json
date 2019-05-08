@@ -15,7 +15,7 @@
     "ssh_username": "ubuntu",
     "ami_name": "app-docker-{{timestamp}}",
     "run_tags": {
-      "Name": "packer-installation",
+      "Name": "jenkins-packer-runner",
       "OS_Version": "Ubuntu",
       "Release": "Latest",
       "Runner": "Packer"
@@ -42,6 +42,11 @@
     "destination": "/tmp/app"
   }, {
     "type": "shell",
-    "inline": ["cd /tmp/app/", "sudo npm install"]
+    "inline": [
+      "cd /tmp/app/",
+      "sudo npm install",
+      "npm install pm2 -g",
+      "pm2 start index.js"
+    ]
   }]
 }
