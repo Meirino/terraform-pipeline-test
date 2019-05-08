@@ -40,7 +40,7 @@
     ]
   }, {
     "type": "file",
-    "source": "{{pwd}}/../app/",
+    "source": "{{pwd}}/app/",
     "destination": "/home/ubuntu/node-app/"
   }, {
     "type": "ansible-local",
