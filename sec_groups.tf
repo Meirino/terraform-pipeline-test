@@ -45,7 +45,7 @@ resource "aws_instance" "web" {
   }
 }
 
-resource "aws_instance" "web" {
+resource "aws_instance" "web2" {
   ami               = "${data.aws_ami.AMI_1.id}"
   instance_type     = "t2.micro"
   subnet_id         = "${aws_subnet.public-subnet-2.id}"
