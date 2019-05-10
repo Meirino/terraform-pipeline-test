@@ -35,12 +35,25 @@ resource "aws_security_group" "app_sec_group" {
 resource "aws_instance" "web" {
   ami               = "${data.aws_ami.AMI_1.id}"
   instance_type     = "t2.micro"
-  subnet_id         = "${aws_subnet.public-subnet.id}"
+  subnet_id         = "${aws_subnet.public-subnet-1.id}"
   security_groups   = ["${aws_security_group.app_sec_group.id}"]
   key_name          = "proxy-test"
 
   tags = {
-    Name = "App"
+    Name = "App-1"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_instance" "web" {
+  ami               = "${data.aws_ami.AMI_1.id}"
+  instance_type     = "t2.micro"
+  subnet_id         = "${aws_subnet.public-subnet-2.id}"
+  security_groups   = ["${aws_security_group.app_sec_group.id}"]
+  key_name          = "proxy-test"
+
+  tags = {
+    Name = "App-2"
     Project = "Jenkins"
   }
 }

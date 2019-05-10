@@ -13,7 +13,7 @@ resource "aws_vpc" "default" {
   }
 }
 
-resource "aws_subnet" "public-subnet" {
+resource "aws_subnet" "public-subnet-1" {
   vpc_id = "${aws_vpc.default.id}"
   cidr_block = "20.10.1.0/24"
   availability_zone = "${var.region}a"
@@ -21,6 +21,18 @@ resource "aws_subnet" "public-subnet" {
 
   tags {
     Name = "Public Subnet 1"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_subnet" "public-subnet-2" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "20.10.2.0/24"
+  availability_zone = "${var.region}a"
+  map_public_ip_on_launch = true
+
+  tags {
+    Name = "Public Subnet 2"
     Project = "Jenkins"
   }
 }
@@ -47,6 +59,11 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_route_table_association" "public_subnet_association" {
-    subnet_id = "${aws_subnet.public-subnet.id}"
+    subnet_id = "${aws_subnet.public-subnet-1.id}"
+    route_table_id = "${aws_route_table.r.id}"
+}
+
+resource "aws_route_table_association" "public_subnet_association-2" {
+    subnet_id = "${aws_subnet.public-subnet-2.id}"
     route_table_id = "${aws_route_table.r.id}"
 }
