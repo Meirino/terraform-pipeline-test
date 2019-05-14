@@ -1,3 +1,4 @@
 app/node_modules
+documentacion/*
 app/*-lock.json
 Jenkinsfile
