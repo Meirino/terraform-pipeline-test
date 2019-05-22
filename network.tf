@@ -4,6 +4,10 @@ provider "aws" {
   region     = "${var.region}"
 }
 
+data "terraform_remote_state" "vpc" {
+  backend = "local"
+}
+
 resource "aws_vpc" "default" {
   cidr_block       = "20.10.0.0/16"
 
@@ -66,4 +70,10 @@ resource "aws_route_table_association" "public_subnet_association" {
 resource "aws_route_table_association" "public_subnet_association-2" {
     subnet_id = "${aws_subnet.public-subnet-2.id}"
     route_table_id = "${aws_route_table.r.id}"
+}
+
+terraform {
+  backend "local" {
+    path = "terraform.tfstate"
+  }
 }
