@@ -44,17 +44,17 @@ resource "aws_subnet" "public-subnet-2" {
   }
 }
 
-resource "aws_subnet" "public-subnet-3" {
-  vpc_id = "${data.terraform_remote_state.cbgi.VPC_id}"
-  cidr_block = "20.10.3.0/24"
-  availability_zone = "${var.region}c"
-  map_public_ip_on_launch = true
+# resource "aws_subnet" "public-subnet-3" {
+#   vpc_id = "${data.terraform_remote_state.cbgi.VPC_id}"
+#   cidr_block = "20.10.3.0/24"
+#   availability_zone = "${var.region}c"
+#   map_public_ip_on_launch = true
 
-  tags {
-    Name = "Public Subnet 3"
-    Project = "Jenkins"
-  }
-}
+#   tags {
+#     Name = "Public Subnet 3"
+#     Project = "Jenkins"
+#   }
+# }
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = "${aws_vpc.default.id}"
