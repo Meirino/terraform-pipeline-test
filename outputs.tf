@@ -16,10 +16,10 @@ output "Web2_ip" {
 #   value = "${data.terraform_remote_state.cbgi.VPC_id}"
 # }
 
-output "Web_ip_remote" {
-  value = "${data.terraform_remote_state.cbgi.Web_ip}"
-}
+# output "Web_ip_remote" {
+#   value = "${data.terraform_remote_state.cbgi.Web_ip}"
+# }
 
-output "Web2_ip_remote" {
-  value = "${data.terraform_remote_state.cbgi.Web2_ip}"
-}
+# output "Web2_ip_remote" {
+#   value = "${data.terraform_remote_state.cbgi.Web2_ip}"
+# }
