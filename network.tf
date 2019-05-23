@@ -4,7 +4,7 @@ provider "aws" {
   region     = "${var.region}"
 }
 
-data "terraform_remote_state" "vpc" {
+data "terraform_remote_state" "cbgi" {
   backend = "local"
   config {
     path = "terraform.tfstate"
@@ -35,11 +35,23 @@ resource "aws_subnet" "public-subnet-1" {
 resource "aws_subnet" "public-subnet-2" {
   vpc_id = "${aws_vpc.default.id}"
   cidr_block = "20.10.2.0/24"
-  availability_zone = "${var.region}a"
+  availability_zone = "${var.region}b"
   map_public_ip_on_launch = true
 
   tags {
     Name = "Public Subnet 2"
+    Project = "Jenkins"
+  }
+}
+
+resource "aws_subnet" "public-subnet-3" {
+  vpc_id = "${data.terraform_remote_state.cbgi.VPC_id}"
+  cidr_block = "20.10.3.0/24"
+  availability_zone = "${var.region}c"
+  map_public_ip_on_launch = true
+
+  tags {
+    Name = "Public Subnet 3"
     Project = "Jenkins"
   }
 }
