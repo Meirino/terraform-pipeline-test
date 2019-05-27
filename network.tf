@@ -4,6 +4,7 @@ provider "aws" {
   region     = "${var.region}"
 }
 
+// Configurar el data source que lee del remote
 data "terraform_remote_state" "cbgi" {
   backend = "local"
   config {
@@ -45,7 +46,7 @@ resource "aws_subnet" "public-subnet-2" {
 }
 
 resource "aws_subnet" "public-subnet-3" {
-  vpc_id = "${data.terraform_remote_state.cbgi.VPC_id}"
+  vpc_id = "${aws_vpc.default.id}"
   cidr_block = "20.10.3.0/24"
   availability_zone = "${var.region}c"
   map_public_ip_on_launch = true
@@ -87,6 +88,7 @@ resource "aws_route_table_association" "public_subnet_association-2" {
     route_table_id = "${aws_route_table.r.id}"
 }
 
+// Configurar remote
 terraform {
   backend "local" {
     path = "terraform.tfstate"
