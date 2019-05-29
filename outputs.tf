@@ -12,3 +12,7 @@ output "Web2_ip" {
 
 // El remote falla si no exiten los atributos (O no han sido creados aún), o el propio archivo .tfstate en una primera ejecución.
 // Si terraform tiene que recrear recursos, los valores de remote serán los antiguos.
+
+output "VPC_id_tfstate" {
+  value = "${data.terraform_remote_state.cbgi.VPC_id}"
+}
