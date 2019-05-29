@@ -88,9 +88,9 @@ resource "aws_route_table_association" "public_subnet_association-2" {
     route_table_id = "${aws_route_table.r.id}"
 }
 
-// Configurar remote
-terraform {
-  backend "local" {
-    path = "terraform.tfstate"
-  }
-}
+# // Configurar remote
+# terraform {
+#   backend "local" {
+#     path = "terraform.tfstate"
+#   }
+# }
